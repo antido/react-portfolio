@@ -1,0 +1,39 @@
+{
+    "experienceList": [
+        {
+            "id": 1,
+            "company": "Technodream Saled and Call Center Services",
+            "startDate": "August 9, 2022",
+            "endDate": "March 3, 2023",
+            "position": "Web Programmer"
+        },
+        {
+            "id": 2,
+            "company": "JSV Software Development",
+            "startDate": "February 1, 2018",
+            "endDate": "July 31, 2019",
+            "position": "Software Developer"
+        },
+        {
+            "id": 3,
+            "company": "WECANS Academy",
+            "startDate": "February 3, 2020",
+            "endDate": "January 29, 2021",
+            "position": "Web Developer"
+        },
+        {
+            "id": 4,
+            "company": "Livei.com",
+            "startDate": "March 1, 2021",
+            "endDate": "April 30, 2021",
+            "position": "Software Developer"
+        }, 
+        {
+            "id": 5,
+            "company": "Magicsoft International Software Development Services",
+            "startDate": "June 16, 2021",
+            "endDate": "June 30, 2022",
+            "position": "Web Developer"
+        }
+    ]
+}
