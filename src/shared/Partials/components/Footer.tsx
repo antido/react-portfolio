@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { profile } from '../../../data/resume'
 
 const Footer = () => {
-
   return (
-    <div className="footer">
-        <p>React Portfolio &copy; 2023. All Rights Reserved.</p>
-    </div>
+    <footer className="site-footer">
+      <div className="container site-footer-inner">
+        <p>&copy; {new Date().getFullYear()} {profile.name}</p>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
   )
 }
 

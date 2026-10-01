@@ -1,16 +1,33 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { profile, sections } from '../../../data/resume'
+import useActiveSection from '../../../hooks/useActiveSection'
+
+const sectionIds = sections.map((section) => section.id)
 
 const Navbar = () => {
+  const activeId = useActiveSection(sectionIds)
 
   return (
-    <div className="navbar">
-        <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-        </ul>
-    </div>
+    <header className="site-header">
+      <div className="container site-header-inner">
+        <a href="#top" className="site-name">{profile.name}</a>
+
+        <nav aria-label="Sections">
+          <ul className="site-nav">
+            {sections.map((section) => (
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className={activeId === section.id ? 'is-active' : undefined}
+                  aria-current={activeId === section.id ? 'true' : undefined}
+                >
+                  {section.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
   )
 }
 

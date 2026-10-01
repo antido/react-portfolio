@@ -1,69 +1,782 @@
+/* =============================================================
+   Portfolio styles
+
+   1. Tokens      - colors, type and spacing as CSS variables
+   2. Base        - page and text defaults
+   3. Layout      - container, header, sections, footer
+   4. Components  - buttons, chips, entries, facts
+   5. Sections    - hero, career ribbon, projects, contact
+   6. Small screens
+
+   The palette comes from Baguio: fog, pine and one marigold accent.
+   ============================================================= */
+
+/* ---------- 1. Tokens ---------- */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  color-scheme: light;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --fog: #eef2f0; /* page background */
+  --paper: #ffffff; /* raised surfaces */
+  --pine: #14342b; /* text and primary actions */
+  --moss: #557267; /* secondary text */
+  --mist: #d5deda; /* lines */
+  --marigold: #e0a100; /* the one accent: current section, hover, focus */
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+
+  /* Type scale (ratio about 1.25) */
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.3125rem;
+  --text-xl: 1.625rem;
+  --text-hero: clamp(2.75rem, 8.5vw, 6.5rem);
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  --radius: 10px;
+  --header-height: 64px;
+  --title-column: 13rem;
+}
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Linked sections stop below the sticky header */
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
   -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body {
   margin: 0;
+  background: var(--fog);
+  color: var(--pine);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--marigold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--marigold);
+  color: var(--pine);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--pine);
+  color: var(--fog);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- 3. Layout ---------- */
+.container {
+  width: min(100% - 2 * var(--space-6), 68rem);
+  margin-inline: auto;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--fog) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mist);
+}
+
+.site-header-inner {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: var(--header-height);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.site-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.site-nav {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.site-nav a {
+  position: relative;
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  color: var(--moss);
+  font-size: var(--text-sm);
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  text-decoration: none;
+  transition: color 0.15s;
 }
 
-@media (prefers-color-scheme: light) {
+.site-nav a:hover {
+  color: var(--pine);
+}
+
+.site-nav a.is-active {
+  color: var(--pine);
+}
+
+/* Marigold marker under the section being read */
+.site-nav a.is-active::after {
+  content: '';
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 2px;
+  height: 2px;
+  background: var(--marigold);
+}
+
+/* A section: title in the left column, content on the right */
+.section {
+  display: grid;
+  grid-template-columns: var(--title-column) minmax(0, 1fr);
+  gap: var(--space-8);
+  padding-block: var(--space-16);
+  border-top: 1px solid var(--mist);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.section-body {
+  max-width: 44rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--mist);
+  color: var(--moss);
+  font-size: var(--text-sm);
+}
+
+.site-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-8);
+}
+
+/* ---------- 4. Components ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-6);
+  border: 1px solid var(--pine);
+  border-radius: var(--radius);
+  color: var(--pine);
+  font-weight: 600;
+  font-size: var(--text-base);
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.button:hover {
+  background: var(--pine);
+  color: var(--fog);
+}
+
+.button-primary {
+  background: var(--pine);
+  color: var(--fog);
+}
+
+.button-primary:hover {
+  background: var(--marigold);
+  border-color: var(--marigold);
+  color: var(--pine);
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-color: var(--marigold);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.link:hover {
+  text-decoration-color: var(--pine);
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+.subheading {
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+/* Label / value pairs */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-8);
+}
+
+.facts dt {
+  color: var(--moss);
+  font-size: var(--text-sm);
+}
+
+.facts dd {
+  font-weight: 500;
+}
+
+.facts-wide {
+  grid-column: 1 / -1;
+}
+
+/* Small pills for skills and tech stacks */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chips li,
+.tag {
+  padding: 0.2rem 0.7rem;
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.tag {
+  margin-left: var(--space-3);
+  color: var(--moss);
+  white-space: nowrap;
+}
+
+/* Dated entries: work experience and education share this layout */
+.entry {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--mist);
+}
+
+.entry:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.entry:last-child {
+  padding-bottom: 0;
+}
+
+.entry-meta {
+  padding-top: 0.3rem;
+  color: var(--moss);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.entry-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.entry-subtitle {
+  margin-top: var(--space-1);
+  font-weight: 500;
+}
+
+.entry-note {
+  color: var(--moss);
+  font-size: var(--text-sm);
+}
+
+.entry-points {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-left: 1.1rem;
+  list-style: disc;
+  color: color-mix(in srgb, var(--pine) 88%, var(--fog));
+}
+
+.entry-points li::marker {
+  color: var(--mist);
+}
+
+/* A job reached from the career ribbon is marked for a moment */
+.entry:target .entry-title {
+  text-decoration: underline;
+  text-decoration-color: var(--marigold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+/* ---------- 5. Sections ---------- */
+
+/* Hero */
+.hero {
+  padding-block: var(--space-24) var(--space-16);
+}
+
+.hero-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-12);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.hero-lede {
+  max-width: 34rem;
+  margin-top: var(--space-6);
+  font-size: var(--text-lg);
+  line-height: 1.45;
+  color: var(--moss);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.hero-photo {
+  width: 11rem;
+  height: 11rem;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid var(--mist);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Zoomed in a little so the scan's corner marks stay outside the frame */
+  transform: scale(1.14);
+  transform-origin: 50% 45%;
+}
+
+/* Career ribbon: one bar per job, positioned by date */
+.ribbon {
+  margin-top: var(--space-16);
+}
+
+.ribbon-track {
+  position: relative;
+  height: 2.5rem;
+  border-bottom: 1px solid var(--pine);
+}
+
+.ribbon-item {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  transform-origin: left center;
+  animation: ribbon-draw 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.ribbon-bar {
+  position: relative;
+  display: block;
+  height: 100%;
+  background: var(--pine);
+  border-radius: 4px 4px 0 0;
+  transition: background 0.15s;
+}
+
+.ribbon-bar:hover,
+.ribbon-bar:focus-visible {
+  background: var(--marigold);
+}
+
+/* Name of the job, shown above its bar on hover or keyboard focus */
+.ribbon-tip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 0;
+  z-index: 2;
+  display: none;
+  flex-direction: column;
+  width: max-content;
+  max-width: 17rem;
+  padding: var(--space-2) var(--space-3);
+  background: var(--pine);
+  color: var(--fog);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.ribbon-tip-period {
+  color: var(--mist);
+}
+
+.ribbon-bar:hover .ribbon-tip,
+.ribbon-bar:focus-visible .ribbon-tip {
+  display: flex;
+}
+
+/* Bars near the right edge open their label leftwards */
+.ribbon-item:nth-last-child(-n + 2) .ribbon-tip {
+  left: auto;
+  right: 0;
+}
+
+.ribbon-years {
+  position: relative;
+  height: 1.75rem;
+  color: var(--moss);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.ribbon-years span {
+  position: absolute;
+  top: var(--space-2);
+}
+
+/* A small tick joins each year to the baseline */
+.ribbon-years span::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--space-2));
+  left: 0;
+  width: 1px;
+  height: 6px;
+  background: var(--pine);
+}
+
+.ribbon-caption {
+  margin-top: var(--space-2);
+  color: var(--moss);
+  font-size: var(--text-sm);
+}
+
+@keyframes ribbon-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Skills */
+.skills-row {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  gap: var(--space-6);
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--mist);
+}
+
+.skills-row:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.skills-row dt {
+  padding-top: 0.2rem;
+  color: var(--moss);
+  font-size: var(--text-sm);
+}
+
+/* Projects */
+/* Preview screenshot on the left, details on the right */
+.project {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--mist);
+}
+
+.project-preview {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+}
+
+.project-body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.project:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.project:last-child {
+  padding-bottom: 0;
+}
+
+.project-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-6);
+}
+
+/* Contact */
+.contact-lead {
+  color: var(--moss);
+}
+
+.contact-email {
+  display: inline-block;
+  margin-block: var(--space-3) var(--space-12);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.6vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--marigold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+.contact-email:hover {
+  text-decoration-color: var(--pine);
+}
+
+/* Page not found */
+.not-found {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-6);
+  padding-block: var(--space-24);
+}
+
+.not-found .hero-lede {
+  margin-top: 0;
+}
+
+/* People who prefer no motion get no animation or smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ribbon-item {
+    animation: none;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+/* ---------- 6. Small screens ---------- */
+
+/* Tablets: section titles move above their content */
+@media (max-width: 860px) {
+  .section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-block: var(--space-12);
+  }
+
+  .hero {
+    padding-block: var(--space-16) var(--space-12);
+  }
+
+  /* The header becomes two rows; links scroll sideways if they don't fit */
+  .site-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-top: var(--space-3);
+  }
+
+  .site-nav {
+    margin-left: calc(-1 * var(--space-3));
+    max-width: calc(100vw - 2 * var(--space-6) + var(--space-3));
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav a {
+    white-space: nowrap;
+  }
+
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --header-height: 92px;
   }
-  a:hover {
-    color: #747bff;
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 2 * var(--space-4), 68rem);
   }
-  button {
-    background-color: #f9f9f9;
+
+  .site-nav {
+    max-width: calc(100vw - 2 * var(--space-4) + var(--space-3));
+  }
+
+  .hero-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  /* Photo above the name */
+  .hero-photo {
+    order: -1;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 20px;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .entry,
+  .skills-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  /* Preview above the project details */
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .entry-meta,
+  .skills-row dt {
+    padding-top: 0;
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tag {
+    display: inline-block;
+    margin: var(--space-1) 0 0;
+  }
+
+  /* Show every other year so the labels don't collide */
+  .ribbon-years span:nth-child(even) {
+    display: none;
+  }
+
+  .ribbon-tip {
+    max-width: 13rem;
+  }
+
+  .site-footer-inner {
+    flex-direction: column;
+    gap: var(--space-2);
   }
 }
