@@ -1,19 +1,16 @@
-import { useState } from 'react'
-import Header from '../../Partials/components/Header'
 import Footer from '../../Partials/components/Footer'
 import Navbar from '../../Partials/components/Navbar'
 import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
-
   return (
-    <div className="main-layout">
-        <div className="site-navbar">
-            <Navbar />
-        </div>
-        <Header />
+    <div className="main-layout" id="top">
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Navbar />
+      <main id="main">
         <Outlet />
-        <Footer />
+      </main>
+      <Footer />
     </div>
   )
 }
